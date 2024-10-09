@@ -1,0 +1,45 @@
+@import 'variables';
+
+.edituserprofile{
+    font-size: 20px;
+    font-weight: 600;
+    color: $primary-color;
+    line-height: 23.44px;
+}
+.editusername{
+    line-height: 14.06px;
+    font-size: 12px;
+    color: $dark-border;
+}
+.inputfield{
+    border: 1px solid $dark-border;
+}
+.closeButton{
+    border: 1px solid $primary-color;
+    color: $primary-color;
+    font-size: 12px;
+    padding: 6px 16px;
+}
+
+.saveButton{
+    border: 1px solid $primary-color;
+    color: $button-text;
+    font-size: 12px;
+    padding: 6px 16px;
+    background-color: $primary-color;
+}
+
+.closeButton:hover{
+    border: 1px solid $primary-color;
+    color: $primary-color;
+    font-size: 12px;
+    padding: 6px 16px;
+}
+
+.saveButton:hover{
+    border: 1px solid $primary-color;
+    color: $button-text;
+    font-size: 12px;
+    padding: 6px 16px;
+    background-color: $primary-color;
+}

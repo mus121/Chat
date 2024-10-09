@@ -1,0 +1,21 @@
+@import 'variables';
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: $primary-color;
+  }
+  .search{
+    position: relative;
+    left: 150px;
+  }
+  .searchInput{
+    border: 1px solid #073C59;
+    border-radius: 8px;
+    padding: 2px 16px;
+    background: #255E7E80;
+    font-size: 16px;
+    color: #9AA2A6;
+  }

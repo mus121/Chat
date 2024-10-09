@@ -1,0 +1,110 @@
+@import 'variables';
+
+
+.header {
+    color: $primary-color;              /* Set text color */
+    padding: 15px 20px;       /* Add padding */
+    display: flex;             /* Use flexbox for layout */
+    justify-content: space-between; /* Space between items */
+    align-items: center;       /* Center items vertically */
+    position: relative;        /* Position relative for absolute elements */
+    z-index: 1000;  
+    width: 100%;          /* Ensure header is above other content */
+}
+
+.logoContainer {
+    display: flex;             /* Flexbox for logo container */
+    align-items: center;       /* Center logo vertically */
+}
+.logo1container{
+    position: absolute;
+    left: 125px;
+}
+.logo {
+    width: 90px;
+    height: 35px;   
+}
+
+.navContainer {
+    display: flex;            /* Flexbox for navigation items */
+}
+
+.navItem {
+    width: Fixed (128px)px;
+    height: Fixed (48px)px;
+    top: 40px;
+    left: 703px;
+    padding: 10px 28px;
+    gap: 4px;
+    opacity: 0px;
+          /* Space between nav items */
+}
+.nav {
+font-size: 16px;
+line-height: 25.75px;
+text-align: left;
+color: $primary-color;   
+text-decoration: none;
+}
+
+.tryPulse {
+    background-color: $primary-color; /* Example: Change background color for "Try Pulse" */
+    padding: 10px 20px;       /* Add padding */
+    border-radius: 5px;       /* Rounded corners */
+    color: $button-text;              /* Text color */
+}
+
+.dropdown {
+    display: flex;
+    align-items: center; /* Align link and image vertically */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.dropdownImage {
+    margin-left: 8px;
+    width: 12px;
+    height: auto;
+    color: transparent;
+}
+
+.dropdownMenu {
+    position: absolute; /* Position the dropdown menu absolutely */
+    background-color: white; /* Set background color for dropdown */
+    border: 1px solid #ddd; /* Optional border */
+    z-index: 100; /* Ensure it's above other elements */
+    margin-top: 5px; /* Space between the dropdown and the link */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
+}
+
+.dropdownItem {
+    display: block; /* Display items as block */
+    padding: 10px; /* Add padding */
+    color: #06334D; /* Change text color */
+    text-decoration: none; /* Remove underline */
+}.dropdown {
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.dropdownMenu {
+    position: absolute; /* Position the dropdown menu absolutely */
+    background-color: white; /* Set background color for dropdown */
+    border: 1px solid #ddd; /* Optional border */
+    z-index: 100; /* Ensure it's above other elements */
+    margin-top: 5px; /* Space between the dropdown and the link */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
+}
+
+.dropdownItem {
+    display: block; /* Display items as block */
+    padding: 10px; /* Add padding */
+    color: #06334D; /* Change text color */
+    text-decoration: none; /* Remove underline */
+}
+
+.dropdownItem:hover {
+    background-color: #f0f0f0; /* Change background color on hover */
+}
+
+.dropdownItem:hover {
+    background-color: #f0f0f0; /* Change background color on hover */
+}

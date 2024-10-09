@@ -1,0 +1,305 @@
+// styles/landing.module.scss
+@import 'variables';
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f7f9fc; // Light background color
+    min-height: 100vh; // Full viewport height
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.hero {
+    .logoContainer {
+        margin-bottom: 20px;
+    }
+    .buttons {
+        display: flex;
+        gap: 15px; // Space between buttons
+        margin-top: 20px;
+        .signup {
+            background-color: $primary-color; // Define your primary color
+            color: $button-text; // Define your button text color
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        
+            &:hover {
+                background-color: darken($primary-color, 10%);
+            }
+        }
+        .login {
+            background-color: $background-close; // Define your primary button color
+            color: $button-text; // Define your button text color
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        
+            &:hover {
+               
+            }
+        }
+    }
+}
+
+.imageContainer {
+    width: 619px;
+    height: 389.96px;
+    top: 200px;
+    left: 771px;
+    gap: 0px;
+    opacity: 0px;
+
+}
+
+.logo {
+    color: transparent;
+    width: 90% !important;
+    height: auto;
+}
+
+.heading {
+    font-size: 45px;
+    font-weight: 900 !important;
+    line-height: 68.29px;
+    letter-spacing: 0.05em;
+    text-align: left;
+    color: $primary-color;
+}
+
+.paragraph {
+    font-size: 20px;
+    line-height: 40px;
+    letter-spacing: 0.05em;
+    text-align: left;
+    color: $primary-color;
+}
+
+.top {
+    padding-top: 25px;
+}
+
+// styles/modal.module.scss
+
+.modal {
+    &.fade {
+        transition: opacity 0.3s ease;
+    }
+
+    &.show {
+        opacity: -1;
+
+    }
+
+    .modal-dialog {
+        max-width: 500px; // Modal ki width set karein
+        margin: 1.75rem auto; // Center modal vertically and horizontally
+    }
+
+    .modal-content {
+        border-radius: 0.5rem; // Border radius for rounded corners
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); // Box shadow
+    }
+
+    .modal-header {
+        border-bottom: none; // Remove default border
+        background-color: #f7f7f7; // Header ka background color
+        color: #333; // Header ka text color
+
+        .close {
+            color: #333; // Close button color
+            opacity: 0.8;
+
+            &:hover,
+            &:focus {
+                opacity: 1; // Hover effect
+            }
+        }
+    }
+
+    .modal-body {
+        padding: 2rem; // Body padding
+        color: #555; // Body text color
+    }
+
+    .modal-footer {
+        border-top: none; // Remove default border
+        background-color: #f7f7f7; // Footer background color
+
+        .btn {
+            &:hover {
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1); // Button shadow on hover
+            }
+        }
+    }
+}
+
+.modalWrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
+
+.modalBackdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+}
+
+.modalContent {
+    position: relative;
+    z-index: 1050;
+    background: #E6EEF2;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 500px;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: center;
+    /* Center the title */
+    align-items: center;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    position: relative;
+    /* Position relative to position the close button */
+    color: $primary-color;
+}
+
+.modalTitle {
+    font-size: 45px;
+    font-weight: 900 !important;
+    line-height: 45.88px;
+    letter-spacing: 0.05em;
+    text-align: left;
+    color: $primary-color;
+}
+
+.closeButton {
+    position: absolute;
+    right: 10px;
+    bottom: 40px;
+    background: #D4E2EA;
+    border: 1px;
+    font-size: 18px;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    padding: 2px;
+    border-radius: 4px;
+    opacity: 0.7;
+}
+
+// .modalBody {
+//     padding-bottom: 15px;
+// }
+.formGroup {
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.formControl {
+    width: 328px;
+    height: 48px;
+    border: 1px solid #8C8C8C;
+    border-radius: 8px;
+    padding: 8px 16px 8px 16px;
+    background: none;
+    font-size: 12px;
+    line-height: 18.75px;
+    color: #8C8C8C;
+}
+
+.signup {
+    padding-top: 15px;
+}
+
+.signupButton {
+    width: 325px;
+    border-radius: 8px;
+    background-color: $primary-color;
+    border: 1px solid $primary-color;
+    color: $button-text;
+}
+
+.signupButton:hover {
+    width: 325px;
+    border-radius: 8px;
+    background-color: $primary-color;
+    color: $button-text;
+}
+
+.login {
+    padding-top: 15px;
+}
+
+.loginButton {
+    width: 325px;
+    border-radius: 8px;
+    background-color: $primary-color;
+    border: 1px solid $primary-color;
+    color: $button-text;
+}
+
+.loginButton:hover {
+    width: 325px;
+    border-radius: 8px;
+    color: $button-text;
+    background-color: $primary-color;
+}
+
+.BarImage {
+    padding-top: 15px;
+}
+
+.or {
+    color: transparent;
+    width: 70% !important;
+    height: auto;
+    position: relative;
+    left: 70px;
+}
+
+.Alreadyaccount {
+    width: 325px;
+    border-radius: 8px;
+    background-color: none !important;
+    border: 1px solid $primary-color !important;
+    font-size: 12px;
+    color: $text;
+    padding: 12px;
+}
+
+.loginText {
+    color: #06334D !important;
+    font-weight: 400;
+    font-size: 14px !important;
+    margin-left: 2px;
+}

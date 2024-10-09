@@ -1,0 +1,54 @@
+@import 'variables';
+
+.userprofile{
+    font-size: 20px;
+    font-weight: 600;
+    color: #06334D;
+    line-height: 23.44px;
+}
+.closebutton{
+    background-color: $background-close;
+    font-size: 10px;
+    // position: relative;
+    // bottom: 5px;
+    // right: 7px;
+
+}
+.modaledit{
+    display: flex;
+}
+.modaledit1 h5{
+    font-size: 20px;
+    line-height: 23.44px;
+    font-weight: 600;
+    color: $primary-color;
+}
+
+.email{
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18.75px;
+    color: $light-primary;
+}
+.status{
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18.75px;
+    color: $primary-color;   
+}
+.btnEdit{
+    background-color: $light-primary;
+    padding: 6px 5px;
+    font-size: 13px;
+    color: $primary-color;
+    font-weight: 500;
+    border-radius: 8px;
+}
+.btnEdit:clicked{
+    background-color: $light-primary;
+    padding: 6px 5px;
+    font-size: 13px;
+    color: $primary-color;
+    font-weight: 500;
+    border-radius: 8px;
+}

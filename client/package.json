@@ -1,0 +1,46 @@
+{
+  "name": "client",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "scss": "sass client/styles/scss/main.scss client/styles/css/main.css --watch"
+  },
+  "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
+    "@prisma/client": "^5.20.0",
+    "autoprefixer": "^10.4.20",
+    "bcrypt": "^5.1.1",
+    "bootstrap": "^5.3.3",
+    "decode": "^0.3.0",
+    "js-cookie": "^3.0.5",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
+    "next": "^14.2.14",
+    "postcss": "^8.4.47",
+    "prisma": "^5.20.0",
+    "react": "^18.3.1",
+    "react-bootstrap": "^2.10.5",
+    "react-dom": "^18.3.1",
+    "react-icons": "^5.3.0",
+    "socket.io-client": "^4.8.0",
+    "tailwindcss": "^3.4.13"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/js-cookie": "^3.0.6",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-bootstrap": "^0.32.37",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.14",
+    "sass": "^1.79.4",
+    "typescript": "^5"
+  }
+}
