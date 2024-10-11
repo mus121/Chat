@@ -11,7 +11,7 @@ const cookieOptions = {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict' as const,
-    maxAge: 3600 * 1000, // 1 hour expiration
+    maxAge: 3600 * 1000, 
 };
 
 // Signup logic
@@ -37,7 +37,7 @@ export const signup = async (req: Request, res: Response) => {
 
         // Create JWT token
         const token = jwt.sign({ userId: dbResult.rows[0].id }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '1h' });
-        res.cookie('authToken', token, cookieOptions); 
+        res.cookie('authToken', token, cookieOptions);
         // res.cookie('userId', dbResult.rows[0].id, { ...cookieOptions, httpOnly: false });
 
         res.status(201).json({ message: 'User created successfully' });
@@ -71,8 +71,8 @@ export const login = async (req: Request, res: Response) => {
 
                 // Set both JWT token and userId in separate cookies
                 res.cookie('authToken', token, cookieOptions);
-                // res.cookie('userId', user.id, { ...cookieOptions, httpOnly: false }); 
-                // res.cookie('displayName', user.display_name, { httpOnly: true, secure: true });
+                res.cookie('userId', user.id, { ...cookieOptions, httpOnly: false }); 
+                res.cookie('email', user.email, { httpOnly: true, secure: true });
 
                 res.status(200).json({ message: 'Login successful' });
             } else {
@@ -95,3 +95,16 @@ export const logout = (req: Request, res: Response) => {
     res.status(200).json({ message: 'Logged out successfully' });
 };
 
+// Fetch all users' emails
+export const email = async (req: Request, res: Response) => {
+    try {
+       
+        const result = await pool.query('SELECT email FROM users');
+        const emails = result.rows.map(row => row.email);
+
+        res.status(200).json(emails);
+    } catch (err) {
+        console.error('Error fetching users:', err);
+        res.status(500).json({ error: 'Failed to fetch users' });
+    }
+};

@@ -8,7 +8,7 @@ const DashboardPage = () => {
         <>
             <div style={{ backgroundColor: '#E6EEF2' }}>
             <ProtectedRoute>
-                <Home />
+                <Home/>
             </ProtectedRoute>
             </div>
         </>

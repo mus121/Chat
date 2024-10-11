@@ -23,7 +23,7 @@ export const messageSchema = z.object({
 // Zod schema for validating direct messages
 export const directMessageSchema = z.object({
   content: z.string().min(1, { message: "Message content is required" }),
-  senderId: z.string().length(26, { message: "Sender ID must be a valid ULID" }), // ULID is 26 characters long
+  senderId: z.string().length(26, { message: "Sender ID must be a valid ULID" }), 
   recipientId: z.string().length(26, { message: "Recipient ID must be a valid ULID" }),
   displayName: z.string().min(1, { message: "Display name is required" }),
   chatId: z.string().min(1, { message: "Chat ID is required" }),

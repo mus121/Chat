@@ -2,8 +2,8 @@
 import { useState, useEffect } from 'react';
 import Cookies from 'js-cookie';
 import { apiFetch } from '../utils/api';
-import router from 'next/router';
-
+import { useRouter } from 'next/navigation';
+import { jwtDecode } from "jwt-decode";
 
 interface User {
     id: string;
@@ -14,7 +14,7 @@ interface SignupData {
     email: string;
     password: string;
     displayName: string; 
-    username: string
+    username: string;
 }
 
 interface LoginData {
@@ -23,35 +23,49 @@ interface LoginData {
 }
 
 interface AuthResponse {
-    token: string;
-    user: User; // Include user data in the response
+    authToken: string;
+    user: User;
+}
+
+interface DecodedToken {
+    id: string;          
+    displayName: string; 
+    exp: number;       
 }
 
 export const useAuth = () => {
+    const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
     const [signupErrorMessage, setSignupErrorMessage] = useState<string>('');
     const [loginErrorMessage, setLoginErrorMessage] = useState<string>('');
     const [signupSuccessMessage, setSignupSuccessMessage] = useState<string>('');
 
     useEffect(() => {
-        const token = Cookies.get('token');
-        console.log("Token",token)
-        if (token) {  
-            const userData: User = { id: 'decodedUserId', displayName: 'Decoded Display Name' };
-            setUser(userData);
+        const authToken = Cookies.get('authToken');
+        if (authToken) {
+            try {
+                const decodedToken: DecodedToken = jwtDecode<DecodedToken>(authToken);
+                const userData: User = {
+                    id: decodedToken.id,          
+                    displayName: decodedToken.displayName  
+                };
+                setUser(userData);
+            } catch (error) {
+                console.error("Error decoding token:", error);
+            }
         }
     }, []);
-
+    
     const handleSignup = async (formData: SignupData) => {
         try {
-            const { token, user: userInfo }: AuthResponse = await apiFetch('http://localhost:5001/api/auth/signup', {
+            const { authToken, user: userInfo }: AuthResponse = await apiFetch('http://localhost:5001/api/auth/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify(formData),
             });
     
-            const cook = Cookies.set('token', token, { expires: 7 }); 
-            console.log("Cook",cook)
+            Cookies.set('authToken', authToken, { expires: 7 }); 
             setUser(userInfo); 
             setSignupSuccessMessage('Signup Successful!');
             setSignupErrorMessage('');
@@ -61,18 +75,18 @@ export const useAuth = () => {
             setSignupSuccessMessage('');
         }
     };
-    
 
     const handleLogin = async (loginData: LoginData) => {
         try {
-            const { token, user: userInfo }: AuthResponse = await apiFetch('http://localhost:5001/api/auth/login', {
+            const { authToken, user }: AuthResponse = await apiFetch('http://localhost:5001/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
                 body: JSON.stringify(loginData),
             });
-            const cook = Cookies.set('token', token, { expires: 7 }); 
-            console.log("Cook",cook)
-            setUser(userInfo); 
+            Cookies.set('authToken', authToken, { expires: 7 });
+            setUser(user); // Set user after login
+            
             return true; 
         } catch (error: unknown) {
             const errorMessage = error instanceof Error ? error.message : 'An error occurred during login.';
@@ -83,7 +97,7 @@ export const useAuth = () => {
 
     const handleLogout = async () => {
         await fetch('http://localhost:5001/api/logout', { method: 'POST' });
-        Cookies.remove('token');
+        Cookies.remove('authToken');
         setUser(null); 
         router.push('/');
     };

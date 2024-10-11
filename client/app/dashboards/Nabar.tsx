@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
 import styles from './scss/Navbar.module.scss';
 import LogoutButton from '@/components/LogoutButton';
 

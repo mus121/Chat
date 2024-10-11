@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret'; // Ensure this is set in your environment variables
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret'; 
 
 export const registerUser = async ({
   email,
@@ -53,5 +53,5 @@ export const loginUser = async (email: string, password: string) => {
 
   // Generate a JWT token
   const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: '1h' });
-  return { token }; // Return the token
+  return { token }; 
 };

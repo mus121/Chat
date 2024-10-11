@@ -1,5 +1,4 @@
-"use client"; // Mark as a client component
-
+'use client'
 import Head from "next/head";
 import Header from '../components/Header';
 import styles from '../styles/scss/landing.module.scss';
@@ -7,9 +6,9 @@ import Image from 'next/image';
 import { Righteous, Roboto, Inter } from 'next/font/google';
 import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useRouter } from "next/navigation";
-import Cookies from 'js-cookie'; 
-import { apiFetch } from './utils/api';
 import { useAuth } from "./hooks/useAuth";
+// import {cook} from './actions';
+
 
 const righteous = Righteous({ weight: '400', subsets: ['latin'] });
 const roboto = Roboto({ weight: '400', subsets: ['latin'] });
@@ -57,6 +56,7 @@ const LandingPage = () => {
             router.push('/dashboards');
         }
     };
+//    console.log( cook())
 
     return (
         <div className={styles.container}>
@@ -82,12 +82,12 @@ const LandingPage = () => {
                                     <div className={`${styles.button} d-flex`}>
                                         <div className={styles.signupMain}>
                                             <button type="button" onClick={() => setShowSignup(true)} className={`${inter.className} btn`}
-                                                 style={{ backgroundColor: '#06334D', color: '#E6EEF2', padding: '5px 40px', borderRadius: '5px'}}
+                                                 style={{ backgroundColor: '#06334D', color: '#E6EEF2', padding: '8px 45px', borderRadius: '5px'}}
                                                  >Signup</button>
                                         </div>
                                         <div className={`${styles.loginMain} mx-4`}>
                                             <button type="button" onClick={() => setShowLogin(true)} className={` ${inter.className} btn `}
-                                                 style={{ backgroundColor: '#E6EEF2', color: '#06334D', padding: '5px 40px', borderRadius: '5px', border: '1px solid #06334D'}}>Login</button>
+                                                 style={{ backgroundColor: '#E6EEF2', color: '#06334D', padding: '8px 45px', borderRadius: '5px', border: '1px solid #06334D'}}>Login</button>
                                         </div>
                                     </div>
                                 </div>
