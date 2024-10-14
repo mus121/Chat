@@ -2,7 +2,9 @@
 
 import React, { useState } from 'react';
 import styles from './scss/SideNavbar.module.scss';
-import UserProfileModal from '@/components/UserProfileModal';
+import UserProfileModal from '@/app/components/UserProfileModal';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const SideNavbar = () => {
   const [showModal, setShowModal] = useState(false);
@@ -53,33 +55,9 @@ const SideNavbar = () => {
                 <path d="M10 22H34" stroke="#E6EEF2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </li>
-              <li>
-                <svg
-                  width="35"
-                  height="37"
-                  viewBox="0 0 44 44"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className={styles.icon}
-                  onClick={handleShow} // Open modal on click
-                >
-                  <rect width="35" height="37" rx="4" fill="#06334C" />
-                  <path
-                    d="M22 10V34"
-                    stroke="#E6EEF2"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M10 22H34"
-                    stroke="#E6EEF2"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </li>
+            <li>
+              <FontAwesomeIcon icon={faUser} className={styles.icons} onClick={handleShow} />
+            </li>
           </div>
         </ul>
       </div>

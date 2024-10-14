@@ -1,13 +1,12 @@
 'use client'
 import Head from "next/head";
-import Header from '../components/Header';
+import Header from './components/Header';
 import styles from '../styles/scss/landing.module.scss';
 import Image from 'next/image';
 import { Righteous, Roboto, Inter } from 'next/font/google';
 import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import { useRouter } from "next/navigation";
-import { useAuth } from "./hooks/useAuth";
-// import {cook} from './actions';
+import { useAuth } from "./hooks/auth";
 
 
 const righteous = Righteous({ weight: '400', subsets: ['latin'] });
@@ -56,7 +55,15 @@ const LandingPage = () => {
             router.push('/dashboards');
         }
     };
-//    console.log( cook())
+    const openLoginModal = () => {
+        setShowLogin(true);
+        setShowSignup(false);
+    };
+
+    const openSignupModal = () => {
+        setShowSignup(true);
+        setShowLogin(false);
+    };
 
     return (
         <div className={styles.container}>
@@ -82,12 +89,12 @@ const LandingPage = () => {
                                     <div className={`${styles.button} d-flex`}>
                                         <div className={styles.signupMain}>
                                             <button type="button" onClick={() => setShowSignup(true)} className={`${inter.className} btn`}
-                                                 style={{ backgroundColor: '#06334D', color: '#E6EEF2', padding: '8px 45px', borderRadius: '5px'}}
-                                                 >Signup</button>
+                                                style={{ backgroundColor: '#06334D', color: '#E6EEF2', padding: '8px 45px', borderRadius: '5px' }}
+                                            >Signup</button>
                                         </div>
                                         <div className={`${styles.loginMain} mx-4`}>
                                             <button type="button" onClick={() => setShowLogin(true)} className={` ${inter.className} btn `}
-                                                 style={{ backgroundColor: '#E6EEF2', color: '#06334D', padding: '8px 45px', borderRadius: '5px', border: '1px solid #06334D'}}>Login</button>
+                                                style={{ backgroundColor: '#E6EEF2', color: '#06334D', padding: '8px 45px', borderRadius: '5px', border: '1px solid #06334D' }}>Login</button>
                                         </div>
                                     </div>
                                 </div>
@@ -113,10 +120,9 @@ const LandingPage = () => {
                                 </button>
                             </div>
                             <div className={styles.modalBody}>
-                                {signupSuccessMessage ? ( // Check for success message
+                                {signupSuccessMessage ? (
                                     <div className={styles.successMessage}>
-                                        <p style={{ color: 'green' }}>{signupSuccessMessage}</p>
-                                        <button type="button" onClick={handleSignupClose} className="btn">Close</button>
+                                        <p style={{ color: '#06334D', fontSize: '20px' }}>Thanks! We have sent a confirmation email </p>
                                     </div>
                                 ) : (
                                     <form onSubmit={handleSubmitSignup}>
@@ -142,7 +148,7 @@ const LandingPage = () => {
                                     <Image src="/images/or.png" alt="Divider" layout="responsive" width={80} height={30} objectFit="cover" className={styles.or} />
                                 </div>
                                 <div className={styles.signup}>
-                                    <button type="button" className={`${styles.Alreadyaccount} btn `}>Already have an account? <span className={styles.loginText}>Login</span></button>
+                                    <button type="button" className={`${styles.Alreadyaccount} btn `} onClick={openLoginModal}>Already have an account? <span className={styles.loginText}>Login</span></button>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +169,7 @@ const LandingPage = () => {
                                 <div className={styles.modalBody}>
                                     <form onSubmit={handleSubmitLogin}>
                                         <div className={`${styles.formGroup} form-group`}>
-                                            <input type="text" className={`${styles.formControl} form-control`} id="email" placeholder="Username"  onChange={handleLoginInputChange} required
+                                            <input type="text" className={`${styles.formControl} form-control`} id="email" placeholder="Username" onChange={handleLoginInputChange} required
                                             />
                                         </div>
                                         <div className={`${styles.formGroup} form-group`}>
@@ -179,7 +185,7 @@ const LandingPage = () => {
                                         <Image src="/images/or.png" alt="Pulse Logo" layout="responsive" width={80} height={30} objectFit="cover" className={styles.or} />
                                     </div>
                                     <div className={styles.signup}>
-                                        <button type="button" className={`${styles.Alreadyaccount} btn `}>Don't have an account? <span className={styles.loginText}>Signup</span></button>
+                                        <button type="button" className={`${styles.Alreadyaccount} btn `} onClick={openSignupModal}>Don't have an account? <span className={styles.loginText}>Signup</span></button>
                                     </div>
                                 </div>
                             </div>

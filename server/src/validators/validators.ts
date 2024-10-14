@@ -23,7 +23,7 @@ export const messageSchema = z.object({
 // Zod schema for validating direct messages
 export const directMessageSchema = z.object({
   content: z.string().min(1, { message: "Message content is required" }),
-  senderId: z.string().length(26, { message: "Sender ID must be a valid ULID" }), 
+  senderId: z.string().length(26, { message: "Sender ID must be a valid ULID" }),
   recipientId: z.string().length(26, { message: "Recipient ID must be a valid ULID" }),
   displayName: z.string().min(1, { message: "Display name is required" }),
   chatId: z.string().min(1, { message: "Chat ID is required" }),
@@ -35,4 +35,11 @@ export const groupMessageSchema = z.object({
   senderId: z.string().length(26, { message: "Sender ID must be a valid ULID" }), // ULID is 26 characters long
   displayName: z.string().min(1, { message: "Display name is required" }),
   chatId: z.string().min(1, { message: "Chat ID is required" }),
+});
+
+// Zod schema for validating Profile Update
+export const updatedProfileSchema = z.object({
+  display_name: z.string().optional(),
+  email: z.string().email().optional(),
+  username: z.string().optional()
 });

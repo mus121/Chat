@@ -1,7 +1,7 @@
 // app/dashboard/page.tsx
 
 import Home from './Home';
-import ProtectedRoute from '../../components/ProtectedRoute';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 const DashboardPage = () => {
     return (

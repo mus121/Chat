@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './scss/Navbar.module.scss';
-import LogoutButton from '@/components/LogoutButton';
+import LogoutButton from '@/app/components/LogoutButton';
 
 const Navbar = () => {
     return (

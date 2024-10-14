@@ -1,11 +1,11 @@
 // components/Header.tsx
 
 import Link from 'next/link';
-import styles from '../styles/scss/Header.module.scss';
-import Image from 'next/image'; // Import the Image component
+import styles from '../../styles/scss/Header.module.scss';
+import Image from 'next/image';
 import { Roboto } from 'next/font/google';
-import { useState } from 'react'; // Import useState
-import { useRouter } from 'next/navigation'; // Import useRouter
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const roboto = Roboto({
     weight: '700',
@@ -13,8 +13,8 @@ const roboto = Roboto({
 });
 
 const Header = () => {
-    const [isDropdownOpen, setDropdownOpen] = useState(false); // State to manage dropdown visibility
-    const router = useRouter(); // Initialize useRouter
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
+    const router = useRouter();
 
     // Function to toggle the dropdown
     const toggleDropdown = () => {
@@ -23,28 +23,31 @@ const Header = () => {
 
     // Function to handle logout
     const handleLogout = () => {
-        localStorage.removeItem('token'); // Clear the token
-        router.push('/'); // Redirect to the landing page
+        localStorage.removeItem('token');
+        router.push('/');
     };
 
     return (
         <header className={styles.header}>
             <div className={styles.logoContainer}>
                 <Image
-                    src="/images/Pulse.png" // Path relative to the public directory
+                    src="/images/Pulse.png"
                     alt="Pulse Logo"
-                    width={100}             // Set the desired width
-                    height={50}             // Set the desired height
-                    className={styles.logo} // Add styles if needed
+                    width={100}
+                    height={50}
+                    className={styles.logo}
                 />
             </div>
-            <div className={styles.logo1Container}>
+            <div className={styles.logo1Container} style={{
+                position: 'absolute',
+                left: '130px'
+            }}>
                 <Image
-                    src="/images/Vector1.png" // Path relative to the public directory
+                    src="/images/Vector 1.png"
                     alt="Vector Icon"
-                    width={40}              // Set the desired width
-                    height={20}             // Set the desired height
-                    className={styles.logo1} // Add styles if needed
+                    width={40}
+                    height={20}
+                    className={styles.logo1}
                 />
             </div>
 
@@ -62,10 +65,10 @@ const Header = () => {
                     {/* Download Link with Dropdown and Image */}
                     <div className={styles.dropdown} onClick={toggleDropdown}>
                         <Link href="/" className={`${styles.nav} ${roboto.className}`}>Download</Link>
-                        <Image 
+                        <Image
                             src="/images/Vector.png"
-                            alt="Dropdown Icon" 
-                            className={styles.dropdownImage} 
+                            alt="Dropdown Icon"
+                            className={styles.dropdownImage}
                             width={50}            // Width as a percentage of the parent container
                             height={20}           // Click on the image also toggles the dropdown
                         />
@@ -81,11 +84,11 @@ const Header = () => {
                 <div className={styles.navItem}>
                     <Link href="/" className={`${styles.nav} ${styles.tryPulse}`}>Try Pulse</Link>
                 </div>
-                <div className={styles.navItem}>
+                {/* <div className={styles.navItem}>
                     <button onClick={handleLogout} className={`${styles.nav} ${styles.logoutButton}`}>
                         Logout
                     </button>
-                </div>
+                </div> */}
             </nav>
         </header>
     );

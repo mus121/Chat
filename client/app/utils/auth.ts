@@ -43,7 +43,7 @@ export const loginUser = async (email: string, password: string) => {
   });
 
   if (!user) {
-    return null; // User not found
+    return null; 
   }
 
   const isValidPassword = await bcrypt.compare(password, user.password);
@@ -51,7 +51,6 @@ export const loginUser = async (email: string, password: string) => {
     return null; 
   }
 
-  // Generate a JWT token
   const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: '1h' });
   return { token }; 
 };

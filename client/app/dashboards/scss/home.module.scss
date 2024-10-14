@@ -170,3 +170,72 @@
         }
     }
 }
+
+.form {
+    display: flex;
+}
+
+.selectedEmail {
+    font-size: 20px;
+    font-weight: 700;
+    color: $primary-color;
+}
+
+.chatBox {
+    padding-bottom: 20px;
+}
+
+.emailMessage {
+    color: #06334D;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 25.41px;
+}
+.chatMessage{
+    line-height: 16.41px;
+    color: black;
+    font-size: 14px;
+    font-weight: 400;
+}
+.sendButton{
+    background-color: $primary-color;
+    color: $button-text;
+    font-size: 14px;
+    border-radius: 8px;
+    padding: 10px 25px;
+}
+.sendButton:hover{
+    background-color: $primary-color;
+    color: $button-text;
+    font-size: 14px;
+    border-radius: 8px;
+    padding: 13px 30px;
+}
+.buttonLeft{
+    position: relative;
+    left: 10px;
+}
+.inputText{
+    height: 50px;
+    background: #B7DDF2;
+    font-size: 14px;
+}
+.searchInput{
+    font-size: 12px;
+    padding: 10px;
+    width: 260px;
+    border-radius: 8px;
+    background-color: $primary-color;
+    color: $button-text;
+}
+.formEmail{
+    line-height: 30px;
+    color: $primary-color;
+    font-size: 16px;
+    font-weight: 700;
+}
+.customImage{
+    border-radius: 20px;
+    height: 32px;
+    width: 32px;
+}

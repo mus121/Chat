@@ -1,6 +1,6 @@
 "use client"
-import "@/styles/globals.css"; // Import your global styles
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import "@/styles/globals.css"; 
+import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { QueryClientProvider,QueryClient } from "react-query";
 import { ReactNode } from "react";
 import { queryClient } from "./providers/query";

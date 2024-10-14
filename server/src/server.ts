@@ -4,7 +4,6 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth';
 import { authMiddleware } from './middleware/auth';
-import chatRoutes from './routes/chat';
 import initSocket from './services/socket';
 import { createServer } from 'http';
 
@@ -28,13 +27,6 @@ app.use(cookieParser());
 
 // Routes
 app.use('/api/auth', authRoutes);
-app.use('/chat', chatRoutes);
-
-// Apply middleware to protect the route
-app.get('/api/protected', authMiddleware, (req: express.Request, res: express.Response) => {
-  const userId = req.body.userId;
-  res.status(200).json({ message: 'You have accessed a protected route!', userId });
-});
 
 // Start the server
 const PORT = process.env.PORT || 3000;
