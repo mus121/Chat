@@ -1,4 +1,5 @@
-"use client"
+'use client'
+
 import "@/styles/globals.css"; 
 import 'bootstrap/dist/css/bootstrap.min.css'; 
 import { QueryClientProvider,QueryClient } from "react-query";

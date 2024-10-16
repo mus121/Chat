@@ -1,17 +1,38 @@
-// components/Sidebar.module.scss
 @import 'variables';
+
+// Mixin for hover effect
+@mixin hoverEffect($bg-color, $text-color, $border-radius) {
+    &:hover {
+        background-color: $bg-color;
+        color: $text-color;
+        border-radius: $border-radius;
+    }
+}
+
+// Mixin for font properties
+@mixin fontStyle($line-height, $font-size, $font-weight, $color) {
+    line-height: $line-height;
+    font-size: $font-size;
+    font-weight: $font-weight;
+    color: $color;
+}
+
+// Mixin for flex display
+@mixin flexDisplay($justify-content, $align-items) {
+    display: flex;
+    justify-content: $justify-content;
+    align-items: $align-items;
+}
 
 .sidebar {
     background-color: #f5f8fa;
     padding: 20px;
     border-right: 1px solid #e1e4e8;
     height: 93vh;
+    width: 300px;
 
     .qluRequire {
-        line-height: 23.44px;
-        font-size: 20px;
-        color: $primary-color;
-        font-weight: 600;
+        @include fontStyle(23.44px, 20px, 600, $primary-color);
     }
 
     .dropdownList {
@@ -22,25 +43,22 @@
         border-radius: 8px;
         position: relative;
         top: 10px;
+        overflow-y: auto;
+        max-height: 300px;
 
         li {
             padding: 10px;
             cursor: pointer;
+            font-size: 12px;
             color: $button-text;
             transition: background-color 0.3s;
-            font-size: 12px;
 
-            &:hover {
-                background-color: $button-text;
-                color: $primary-color;
-                border-radius: 8px;
-            }
+            @include hoverEffect($button-text, $primary-color, 8px);
 
             &.activeUser {
-                background-color: #cce5ff; // Highlight for the active user
+                background-color: #cce5ff;
                 font-weight: bold;
             }
-
         }
     }
 }
@@ -48,6 +66,10 @@
 .mainContainer {
     position: relative;
     right: 217px;
+}
+
+.chatMap {
+    display: flex;
 }
 
 .parentSide {
@@ -61,44 +83,19 @@
 }
 
 .icon {
-    color: $primary-color;
-    font-size: 16px;
+    @include fontStyle(null, 16px, null, $primary-color);
     padding: 0px 4px;
 }
 
-.groupText {
-    line-height: 18.75px;
-    font-size: 16px;
-    font-weight: 700;
-    color: $primary-color;
-    padding: 6px;
-}
-
+.groupText,
 .directText {
-    line-height: 18.75px;
-    font-size: 16px;
-    font-weight: 700;
-    color: $primary-color;
-    padding: 13px;
+    @include fontStyle(18.75px, 16px, 700, $primary-color);
 }
 
-.groups {
-    padding: 7px;
-}
-
-.groups:hover {
-    background: #B7DDF2;
-    border-radius: 8px;
-}
-
+.groups,
 .directMessages {
-
     padding: 7px;
-}
-
-.directMessages:hover {
-    background: #B7DDF2;
-    border-radius: 8px;
+    @include hoverEffect(#B7DDF2, null, 8px);
 }
 
 .qluAi {
@@ -107,8 +104,7 @@
 }
 
 .chatInput {
-    display: flex;
-    justify-content: space-between;
+    @include flexDisplay(space-between, null);
     padding: 10px;
     border-top: 1px solid #e1e4e8;
     background-color: #f5f5f5;
@@ -135,22 +131,24 @@
         cursor: pointer;
         font-size: 1rem;
         transition: background-color 0.3s ease;
+
+        @include hoverEffect(darken(#007bff, 10%), white, 5px);
     }
 }
 
-
-.chat-area {
+.chat11 {
     position: absolute;
     bottom: 0;
+    padding: 20px;
+    left: 330px;
 
     .message-list {
-        height: 400px; // Adjust height as needed
+        height: 400px;
         overflow-y: auto;
         background-color: #f1f1f1;
         padding: 10px;
         border-radius: 5px;
         margin-bottom: 20px;
-
     }
 
     .message {
@@ -162,7 +160,7 @@
     }
 
     .message-input {
-        display: flex;
+        @include flexDisplay(null, null);
 
         input {
             flex: 1;
@@ -172,55 +170,44 @@
 }
 
 .form {
-    display: flex;
+    @include flexDisplay(null, null);
 }
 
 .selectedEmail {
-    font-size: 20px;
-    font-weight: 700;
-    color: $primary-color;
+    @include fontStyle(null, 20px, 700, $primary-color);
 }
 
 .chatBox {
-    padding-bottom: 20px;
+    max-height: 750px;
+    overflow-y: auto;
 }
 
 .emailMessage {
-    color: #06334D;
-    font-weight: 700;
-    font-size: 14px;
-    line-height: 25.41px;
+    @include fontStyle(25.41px, 14px, 700, #06334D);
 }
-.chatMessage{
-    line-height: 16.41px;
-    color: black;
-    font-size: 14px;
-    font-weight: 400;
+
+.chatMessage {
+    @include fontStyle(16.41px, 14px, 400, black);
 }
-.sendButton{
-    background-color: $primary-color;
-    color: $button-text;
-    font-size: 14px;
-    border-radius: 8px;
+
+.sendButton {
+    @include hoverEffect($primary-color, $button-text, 8px);
     padding: 10px 25px;
-}
-.sendButton:hover{
-    background-color: $primary-color;
-    color: $button-text;
     font-size: 14px;
-    border-radius: 8px;
-    padding: 13px 30px;
 }
-.buttonLeft{
+
+.buttonLeft {
     position: relative;
     left: 10px;
 }
-.inputText{
+
+.inputText {
     height: 50px;
     background: #B7DDF2;
     font-size: 14px;
 }
-.searchInput{
+
+.searchInput {
     font-size: 12px;
     padding: 10px;
     width: 260px;
@@ -228,14 +215,24 @@
     background-color: $primary-color;
     color: $button-text;
 }
-.formEmail{
-    line-height: 30px;
-    color: $primary-color;
-    font-size: 16px;
-    font-weight: 700;
+
+.strong {
+    @include fontStyle(30px, 20px, 700, $primary-color);
 }
-.customImage{
+
+.customImage {
     border-radius: 20px;
     height: 32px;
     width: 32px;
+}
+
+.ChatMessages {
+    gap: 12px;
+    line-height: 25px;
+    margin-bottom: 14px;
+}
+
+.unreadCount {
+    font-size: 40px;
+    font-weight: 900;
 }

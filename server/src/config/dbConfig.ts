@@ -11,7 +11,6 @@ const pool = new Pool({
   port: Number(process.env.DB_PORT),
 });
 
-// Database connection check
 pool.connect((err) => {
   if (err) {
     console.error('Error connecting to the database', err);

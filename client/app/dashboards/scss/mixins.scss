@@ -1,0 +1,56 @@
+// mixins.scss
+@mixin border-radius($radius) {
+    border-radius: $radius;
+}
+
+@mixin padding($top, $right, $bottom, $left) {
+    padding: $top $right $bottom $left;
+}
+
+@mixin font-size($size) {
+    font-size: $size;
+}
+
+@mixin background-color($color) {
+    background-color: $color;
+}
+
+@mixin flex-center-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+// mixins.scss
+@mixin position($pos, $top: null, $right: null, $bottom: null, $left: null) {
+    position: $pos;
+    @if $top {
+        top: $top;
+    }
+    @if $right {
+        right: $right;
+    }
+    @if $bottom {
+        bottom: $bottom;
+    }
+    @if $left {
+        left: $left;
+    }
+}
+
+@mixin size($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin margin($top, $right, $bottom, $left) {
+    margin: $top $right $bottom $left;
+}
+
+@mixin transition($property, $duration, $ease) {
+    transition: $property $duration $ease;
+}
+
+@mixin background-color($color) {
+    background-color: $color;
+}

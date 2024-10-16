@@ -1,10 +1,11 @@
 // components/Header.tsx
+'use client'
 
 import Link from 'next/link';
 import styles from '../../styles/scss/Header.module.scss';
 import Image from 'next/image';
 import { Roboto } from 'next/font/google';
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const roboto = Roboto({
@@ -30,25 +31,13 @@ const Header = () => {
     return (
         <header className={styles.header}>
             <div className={styles.logoContainer}>
-                <Image
-                    src="/images/Pulse.png"
-                    alt="Pulse Logo"
-                    width={100}
-                    height={50}
-                    className={styles.logo}
-                />
+                <Image src="/images/Pulse.png" alt="Pulse Logo"  width={100}  height={50} className={styles.logo} />
             </div>
             <div className={styles.logo1Container} style={{
                 position: 'absolute',
                 left: '130px'
             }}>
-                <Image
-                    src="/images/Vector 1.png"
-                    alt="Vector Icon"
-                    width={40}
-                    height={20}
-                    className={styles.logo1}
-                />
+                <Image src="/images/Vector 1.png" alt="Vector Icon" width={40} height={20} className={styles.logo1} />
             </div>
 
             <nav className={styles.navContainer}>
@@ -65,13 +54,7 @@ const Header = () => {
                     {/* Download Link with Dropdown and Image */}
                     <div className={styles.dropdown} onClick={toggleDropdown}>
                         <Link href="/" className={`${styles.nav} ${roboto.className}`}>Download</Link>
-                        <Image
-                            src="/images/Vector.png"
-                            alt="Dropdown Icon"
-                            className={styles.dropdownImage}
-                            width={50}            // Width as a percentage of the parent container
-                            height={20}           // Click on the image also toggles the dropdown
-                        />
+                        <Image src="/images/Vector.png" alt="Dropdown Icon" className={styles.dropdownImage} width={50} height={20} />
                     </div>
                     {isDropdownOpen && (
                         <div className={styles.dropdownMenu}>
@@ -84,11 +67,6 @@ const Header = () => {
                 <div className={styles.navItem}>
                     <Link href="/" className={`${styles.nav} ${styles.tryPulse}`}>Try Pulse</Link>
                 </div>
-                {/* <div className={styles.navItem}>
-                    <button onClick={handleLogout} className={`${styles.nav} ${styles.logoutButton}`}>
-                        Logout
-                    </button>
-                </div> */}
             </nav>
         </header>
     );

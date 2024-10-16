@@ -1,127 +1,96 @@
 // app/hooks/useAuth.tsx
-import { useState, useEffect } from 'react';
-import Cookies from 'js-cookie';
-import { apiFetch } from '../utils/api';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-// import { jwtDecode } from "jwt-decode";
-import { cook } from '../actions';
-// Interface definitions
-interface User {
-    id: string;
-    displayName: string;
-}
+import { useMutation } from 'react-query';
+import { cook } from '@/app/actions';
 
-interface SignupData {
-    email: string;
-    password: string;
-    display_name: string;
-    username: string;
-}
-
-interface LoginData {
-    email: string;
-    password: string;
-}
-
-interface AuthResponse {
-    authToken: string;
-    user: User;
-}
-
-interface DecodedToken {
-    id: string;
-    displayName: string;
-    exp: number;
-}
-
-export const useAuth = () => {
+export const auth = () => {
     const router = useRouter();
-    const [user, setUser] = useState<User | null>(null);
-    const [signupErrorMessage, setSignupErrorMessage] = useState<string>('');
-    const [loginErrorMessage, setLoginErrorMessage] = useState<string>('');
-    const [signupSuccessMessage, setSignupSuccessMessage] = useState<string>('');
+    const [user, setUser] = useState(null);
+    const [signupErrorMessage, setSignupErrorMessage] = useState('');
+    const [loginErrorMessage, setLoginErrorMessage] = useState('');
+    const [signupSuccessMessage, setSignupSuccessMessage] = useState('');
 
-    // Effect to load user from cookie
-    // useEffect(() => {
-    //     const authToken = Cookies.get('authToken');
-    //     if (authToken) {
-    //         try {
-    //             const decodedToken: DecodedToken = jwtDecode<DecodedToken>(authToken); 
-    //             const userData: User = {
-    //                 id: decodedToken.id,
-    //                 displayName: decodedToken.displayName,
-    //             };
-    //             setUser(userData); 
-    //         } catch (error) {
-    //             console.error("Error decoding token:", error);
-    //             Cookies.remove('authToken'); 
-    //         }
-    //     }
-    // }, []); 
-
-    // Signup handler
-    const handleSignup = async (formData: SignupData) => {
-        try {
-            const { authToken, user: userInfo }: AuthResponse = await apiFetch('http://localhost:5001/api/auth/signup', {
+    const signupMutation = useMutation(
+        async (formData) => {
+            const response = await fetch('/api/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
                 body: JSON.stringify(formData),
             });
 
-            cook();
-            setUser(userInfo);
-            setSignupSuccessMessage('Signup Successful!');
-            setSignupErrorMessage('');
-        } catch (error: unknown) {
-            const errorMessage = error instanceof Error ? error.message : 'An error occurred during signup.';
-            setSignupErrorMessage(errorMessage);
-            setSignupSuccessMessage('');
-        }
-    };
+            if (!response.ok) {
+                throw new Error('Signup failed');
+            }
 
-    // Login handler
-    const handleLogin = async (loginData: LoginData): Promise<boolean> => {
-        try {
-            const { authToken, user: userInfo }: AuthResponse = await apiFetch('http://localhost:5001/api/auth/login', {
+            const { user } = await response.json();
+            console.log(cook())
+            
+            return user;
+        },
+        {
+            onSuccess: (userData) => {
+                setUser(userData);
+                setSignupSuccessMessage('Signup Successful!');
+                setSignupErrorMessage('');
+            },
+            onError: (error: unknown) => {
+                const errorMessage = error instanceof Error ? error.message : 'An error occurred during signup.';
+                setSignupErrorMessage(errorMessage);
+                setSignupSuccessMessage('');
+            },
+        }
+    );
+
+    const loginMutation = useMutation(
+        async (loginData) => {
+            const response = await fetch('/api/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
                 body: JSON.stringify(loginData),
             });
 
-            cook();
-            setUser(user);
-            setLoginErrorMessage('');
-            return true;
-        } catch (error: unknown) {
-            const errorMessage = error instanceof Error ? error.message : 'An error occurred during login.';
-            setLoginErrorMessage(errorMessage);
-            return false;
-        }
-    };
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
 
-    // Logout handler
+            const { authToken, user } = await response.json();
+            cook();
+            return user;
+        },
+        {
+            onSuccess: (userData) => {
+                setUser(userData);
+                router.push('/dashboards');
+            },
+            onError: (error: unknown) => {
+                setLoginErrorMessage(error instanceof Error ? error.message : 'An error occurred during login.');
+            },
+        }
+    );
+
     const handleLogout = async () => {
         try {
-            await fetch('http://localhost:5001/api/logout', { method: 'POST' });
-            Cookies.remove('authToken');
-            setUser(null);
-            router.push('/');
+            const response = await fetch('/api/logout', { method: 'POST' });
+
+            if (response.ok) {
+                setUser(null);
+                router.push('/');
+            }
         } catch (error) {
             console.error('Error during logout:', error);
         }
     };
 
-    // Profile Update 
-    
     return {
         user,
         signupErrorMessage,
         loginErrorMessage,
         signupSuccessMessage,
-        handleSignup,
-        handleLogin,
+        signup: signupMutation.mutateAsync,
+        login: loginMutation.mutateAsync,
         handleLogout,
     };
 };

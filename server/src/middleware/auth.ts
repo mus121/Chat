@@ -4,8 +4,8 @@ import jwt from 'jsonwebtoken';
 export const authMiddleware = (req: Request, res: Response, next: NextFunction): void => {
     // Log all cookies for debugging
     const token = req.cookies.authToken;
-    // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwMUo5WEcxWkY1NDNXSDQ2OVJISkpBNlBZOCIsImlhdCI6MTcyODc3NTU3NCwiZXhwIjoxNzI4Nzc5MTc0fQ.Q3qww-otMqWXYo7JVgzEjkgQzhR9-Ds8W7CjjNhkLt8';
-    console.log("Token",token)
+
+    console.log("Token", token)
     if (!token) {
         res.status(401).json({ error: 'Access Denied, no token provided' });
         return;

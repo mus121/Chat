@@ -1,12 +1,9 @@
-import { useQuery } from 'react-query'
-import axios from 'axios'
+import { useQuery } from 'react-query';
+import axios from 'axios';
 
-const fetchemails = async () => {
-    const respone = await axios.get('http://localhost:5001/api/auth/email');
-    return respone.data;
-}
-
-const email = () => {
-    return useQuery('emails', fetchemails);
-}
-export default email
+export const useFetchEmails = () => {
+  return useQuery('fetchEmails', async () => {
+    const { data } = await axios.get('http://localhost:5001/api/private/email');
+    return data;
+  });
+};
