@@ -52,9 +52,11 @@
         }
     }
 }
-.landingSection{
+
+.landingSection {
     display: flex;
 }
+
 .imageContainer {
     width: 700px;
     height: 400.96px;
@@ -67,20 +69,20 @@
 }
 
 .heading {
-    font-size: 55px;
+    font-size: 65px;
     font-weight: 900 !important;
-    line-height: 72.29px;
+    line-height: 80.29px;
     letter-spacing: 0.05em;
     text-align: left;
     color: $primary-color;
 }
 
 .paragraph {
-    font-size: 28px;
-    line-height: 45px;
+    font-size: 35px;
+    line-height: 55px;
     letter-spacing: 0.05em;
     text-align: left;
-    color: $primary-color;
+    color: #06334D;
 }
 
 .top {
@@ -209,10 +211,6 @@
     border-radius: 4px;
     opacity: 0.7;
 }
-
-// .modalBody {
-//     padding-bottom: 15px;
-// }
 .formGroup {
     padding-top: 10px;
     display: flex;

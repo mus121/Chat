@@ -1,10 +1,9 @@
-// authController.ts
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { ulid } from 'ulid';
-import { pool } from '../config/dbConfig';
 import { signupSchema, loginSchema } from '../validators/auth';
+import { findUserByEmail, createUser } from '../repositories/userRepository';
 
 const cookieOptions = {
     httpOnly: true,
@@ -27,13 +26,9 @@ export const signup = async (req: Request, res: Response) => {
         const userId = ulid();
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Insert new user into the database
-        const dbResult = await pool.query(
-            'INSERT INTO users (id, email, display_name, username, password) VALUES ($1, $2, $3, $4, $5) RETURNING id',
-            [userId, email, display_name, username, hashedPassword]
-        );
+        // Call createUser from the userRepository
+        const dbResult = await createUser(userId, email, display_name, username, hashedPassword);
 
-        // Create JWT token
         const token = jwt.sign({ userId: dbResult.rows[0].id }, process.env.JWT_SECRET || 'your_jwt_secret', { expiresIn: '1h' });
         res.cookie('authToken', token, cookieOptions);
 
@@ -56,7 +51,7 @@ export const login = async (req: Request, res: Response) => {
     const { email, password } = result.data;
 
     try {
-        const dbResult = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+        const dbResult = await findUserByEmail(email);
 
         if (dbResult.rows.length > 0) {
             const user = dbResult.rows[0];
@@ -68,7 +63,7 @@ export const login = async (req: Request, res: Response) => {
 
                 res.cookie('authToken', token, { ...cookieOptions, httpOnly: false });
                 res.cookie('userId', user.id, { ...cookieOptions, httpOnly: false });
-                res.cookie('email', user.email, { ...cookieOptions, httpOnly: false, });
+                res.cookie('email', user.email, { ...cookieOptions, httpOnly: false });
 
                 res.status(200).json({ message: 'Login successful' });
             } else {
@@ -83,10 +78,10 @@ export const login = async (req: Request, res: Response) => {
     }
 };
 
+// Logout logic
 export const logout = (req: Request, res: Response) => {
     res.clearCookie('authToken', { ...cookieOptions, httpOnly: false });
     res.clearCookie('email', { ...cookieOptions, httpOnly: false });
     res.clearCookie('userId', { ...cookieOptions, httpOnly: false });
     res.status(200).json({ message: 'Logged out successfully' });
 };
-

@@ -27,7 +27,6 @@ const Home: React.FC = () => {
 
     const { data: emails = [], isLoading, isError } = useFetchEmails();
 
-    // Function to fetch messages based on selected email
     const fetchMessages = async (email: string) => {
         try {
             const response = await axios.get(`http://localhost:5001/api/private/messages/${email}`, {
@@ -67,12 +66,11 @@ const Home: React.FC = () => {
         };
     }, [selectedEmail]);
 
-    // Toggle Direct Messages section
     const toggleDirectMessages = () => {
         setIsDirectMessagesOpen((prev) => !prev);
     };
 
-    // Function to handle selecting an email for direct messages
+   
     const handleSelectDirectMessage = async (email: string) => {
         setSelectedEmail(email);
        
@@ -82,7 +80,6 @@ const Home: React.FC = () => {
         }));
     };
 
-    // Handle sending direct message
     const handleSendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
 
