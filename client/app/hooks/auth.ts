@@ -13,7 +13,7 @@ export const auth = () => {
 
     const signupMutation = useMutation(
         async (formData) => {
-            const response = await fetch('/api/signup', {
+            const response = await fetch('/api/auth/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',

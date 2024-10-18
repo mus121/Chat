@@ -8,8 +8,7 @@
 }
 
 .search {  
-    position: relative;
-    left: 150px;
+    @include position(relative,null,null,null,150px);
 }
 
 .searchInput {

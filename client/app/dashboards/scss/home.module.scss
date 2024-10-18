@@ -1,6 +1,7 @@
 @import 'variables';
+@import 'colors';
 
-// Mixin for hover effect
+
 @mixin hoverEffect($bg-color, $text-color, $border-radius) {
     &:hover {
         background-color: $bg-color;
@@ -9,7 +10,6 @@
     }
 }
 
-// Mixin for font properties
 @mixin fontStyle($line-height, $font-size, $font-weight, $color) {
     line-height: $line-height;
     font-size: $font-size;
@@ -17,7 +17,6 @@
     color: $color;
 }
 
-// Mixin for flex display
 @mixin flexDisplay($justify-content, $align-items) {
     display: flex;
     justify-content: $justify-content;
@@ -32,7 +31,7 @@
     width: 300px;
 
     .qluRequire {
-        @include fontStyle(23.44px, 20px, 600, $primary-color);
+        @include fontStyle(25.44px, 22px, 600, $primary-color);
     }
 
     .dropdownList {
@@ -49,7 +48,7 @@
         li {
             padding: 10px;
             cursor: pointer;
-            font-size: 12px;
+            font-size: 16px;
             color: $button-text;
             transition: background-color 0.3s;
 
@@ -180,6 +179,7 @@
 .chatBox {
     max-height: 750px;
     overflow-y: auto;
+    scroll-behavior: smooth
 }
 
 .emailMessage {
@@ -233,6 +233,15 @@
 }
 
 .unreadCount {
-    font-size: 40px;
-    font-weight: 900;
+    font-size: 16px;
+    background-color: white;
+    color: black;
+    padding: 2px 7px;
+    border: 1px solid;
+    border-radius: 16px;
+    margin-left: 50px;
+}
+
+.backgroungHome{
+    background-color: $button-text;
 }

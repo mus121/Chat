@@ -77,7 +77,7 @@ export const login = async (req: Request, res: Response) => {
         res.status(500).json({ error: 'Login failed.' });
     }
 };
-
+   
 // Logout logic
 export const logout = (req: Request, res: Response) => {
     res.clearCookie('authToken', { ...cookieOptions, httpOnly: false });

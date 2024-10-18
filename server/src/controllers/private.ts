@@ -21,7 +21,7 @@ export const email = async (req: Request, res: Response) => {
         res.status(200).json(emails);
     } catch (err) {
         console.error('Error fetching users:', err);
-        res.status(500).json({ error: 'Failed to fetch users' });
+        res.status(500).json({ error: 'Failed to fetch users' });  
     }
 };
 

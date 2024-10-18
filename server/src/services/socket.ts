@@ -1,6 +1,6 @@
 import { Server, Socket } from 'socket.io';
 import { Server as HttpServer } from 'http';
-import MessageModel from '../models/message'; 
+import MessageModel from '../models/message';
 
 const initSocket = (server: HttpServer) => {
     const io = new Server(server, {
@@ -12,7 +12,7 @@ const initSocket = (server: HttpServer) => {
     });
 
     const users: { [key: string]: string } = {};
-    const groups: { [key: string]: string[] } = {}; 
+    const groups: { [key: string]: string[] } = {};
 
     io.on('connection', (socket: Socket) => {
         console.log('A user connected:', socket.id);

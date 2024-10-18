@@ -38,7 +38,7 @@ const LogoutButton: React.FC = () => {
         },
     });
 
-    const handleLogout = () => {
+    const handleLogout = () => { 
         mutate(); 
     };
 

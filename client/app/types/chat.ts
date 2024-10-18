@@ -3,8 +3,7 @@ export interface Message {
     id: string;
     content: string;
     senderId: string;
-    displayName: string;
-    createdAt: string;
+    display_name: string;
 }
 
 export interface SendMessageData {
@@ -14,8 +13,3 @@ export interface SendMessageData {
     displayName: string;
 }
 
-export interface Chat {
-    id: string;
-    name: string;
-    isGroupChat: boolean;
-}

@@ -6,16 +6,18 @@ import SideNavbar from './SideNavbar';
 import styles from './scss/home.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import {useFetchEmails} from '../hooks/email';
+import { useFetchEmails } from '../hooks/email';
 import { io } from 'socket.io-client';
 import { email } from '../actions';
 import axios from 'axios';
 import Image from 'next/image';
-import { Message } from '../types/chat';
 
-const socket = io('http://localhost:5001', {
-    withCredentials: true,
-});
+const socket = io('http://localhost:5001', { withCredentials: true });
+
+interface Message {
+    from: string;
+    message: string;
+}
 
 const Home: React.FC = () => {
     const [selectedEmail, setSelectedEmail] = useState<string>('');
@@ -29,15 +31,14 @@ const Home: React.FC = () => {
 
     const fetchMessages = async (email: string) => {
         try {
-            const response = await axios.get(`http://localhost:5001/api/private/messages/${email}`, {
-                withCredentials: true,
-            });
+            console.log('Fetching messages for:', email); // Debug log
+            const response = await axios.get(`http://localhost:5001/api/private/messages/${email}`, { withCredentials: true });
             const transformedMessages: Message[] = response.data.map((msg: any) => ({
                 from: msg.sender_email,
                 message: msg.message_content,
             }));
+            console.log('Fetched Messages:', transformedMessages); 
             setMessages(transformedMessages);
-            console.log("Message Response", transformedMessages);
         } catch (error) {
             console.error('Error fetching messages:', error);
         }
@@ -50,13 +51,15 @@ const Home: React.FC = () => {
     }, [selectedEmail]);
 
     useEffect(() => {
+        // Listen for incoming messages
         socket.on('message', (msg) => {
-            if (msg.sender_email === selectedEmail) {
-                setMessages((prevMessages) => [...prevMessages, msg]);
+            console.log('Received Message:', msg);
+            if (msg.from === selectedEmail) {
+                setMessages((prevMessages) => [...prevMessages, { from: msg.from, message: msg.message }]);
             } else {
                 setUnreadMessages((prev) => ({
                     ...prev,
-                    [msg.sender_email]: (prev[msg.sender_email] || 0) + 1,
+                    [msg.from]: (prev[msg.from] || 0) + 1,
                 }));
             }
         });
@@ -70,34 +73,47 @@ const Home: React.FC = () => {
         setIsDirectMessagesOpen((prev) => !prev);
     };
 
-   
-    const handleSelectDirectMessage = async (email: string) => {
+    const handleSelectDirectMessage = (email: string) => {
         setSelectedEmail(email);
-       
-        setUnreadMessages((prev) => ({
-            ...prev,
-            [email]: 0, 
-        }));
+        setUnreadMessages((prev) => ({ ...prev, [email]: 0 }));
+        fetchMessages(email);
     };
 
     const handleSendMessage = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (newMessage.trim() && selectedEmail) {
-            const senderEmailCookie = await email();
-            const senderEmail = senderEmailCookie?.value || '';
-            const messageData = { content: newMessage, recipientEmail: selectedEmail, senderEmail };
+      
+        const senderEmailCookie = document.cookie.split('; ').find(row => row.startsWith('email='));
+        const senderEmail = senderEmailCookie ? decodeURIComponent(senderEmailCookie.split('=')[1]) : '';
 
-            socket.emit('direct-message', messageData);
-            setMessages((prevMessages) => [...prevMessages, { from: senderEmail, message: newMessage }]);
-            setNewMessage('');
+        
+        console.log('Sender Email:', senderEmail);
+        console.log('New Message:', newMessage);
+
+        if (!senderEmail || !newMessage) {
+            console.error('Cannot send message. Sender Email or New Message is undefined.');
+            return; 
         }
+
+        const messageData = { content: newMessage, recipientEmail: selectedEmail };
+
+       
+        socket.emit('direct-message', messageData);
+
+        console.log('Current Messages:', messages);
+
+        // Update messages state
+        setMessages((prevMessages) => {
+            const updatedMessages = [...prevMessages, { from: senderEmail, message: newMessage }];
+            console.log('Updated Messages:', updatedMessages);
+            return updatedMessages;
+        });
+
+        setNewMessage('');
     };
 
     // Filter emails based on search query
-    const filteredEmails = emails.filter((email: string) =>
-        email.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredEmails = emails.filter((email: string) => email.toLowerCase().includes(searchQuery.toLowerCase()));
 
     return (
         <>
@@ -128,24 +144,22 @@ const Home: React.FC = () => {
                                         </div>
                                         {/* Direct Messages UI */}
                                         {isDirectMessagesOpen && (
-                                            <div>
-                                                <ul className={styles.dropdownList}>
-                                                    {filteredEmails.map((email: string, index: number) => (
-                                                        <li
-                                                            key={index}
-                                                            onClick={() => handleSelectDirectMessage(email)}
-                                                            className={styles.emails}
-                                                        >
-                                                            {email}
-                                                            {unreadMessages[email] > 0 && (
-                                                                <span className={styles.unreadCount}>
-                                                                    {unreadMessages[email]}
-                                                                </span>
-                                                            )}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
+                                            <ul className={styles.dropdownList}>
+                                                {filteredEmails.map((email: string, index: number) => (
+                                                    <li
+                                                        key={index}
+                                                        onClick={() => handleSelectDirectMessage(email)}
+                                                        className={styles.emails}
+                                                    >
+                                                        {email}
+                                                        {unreadMessages[email] > 0 && (
+                                                            <span className={styles.unreadCount}>
+                                                                {unreadMessages[email]}
+                                                            </span>
+                                                        )}
+                                                    </li>
+                                                ))}
+                                            </ul>
                                         )}
                                     </div>
                                 </div>
@@ -156,7 +170,7 @@ const Home: React.FC = () => {
                             <div className={`${styles.chat11} container-fluid`}>
                                 <div className="message-input">
                                     {selectedEmail && <p className={styles.selectedEmail}>Chat with: {selectedEmail}</p>}
-                                    <div className={styles.chatBox}>
+                                    <div className={styles.chatBox} key={JSON.stringify(messages)}>
                                         {messages.length > 0 ? (
                                             messages.map((msg, index) => (
                                                 <div className={`${styles.ChatMessages} d-flex`} key={index}>
@@ -203,4 +217,5 @@ const Home: React.FC = () => {
         </>
     );
 };
+
 export default Home;
